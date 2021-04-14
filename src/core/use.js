@@ -1,7 +1,7 @@
-import Vue from 'vue'
+// import Vue from 'vue'
 
 // base library
-import Antd from 'ant-design-vue'
+// import Antd from 'ant-design-vue'
 // import Viser from 'viser-vue'
 // import VueCropper from 'vue-cropper'
 import 'ant-design-vue/dist/antd.less'
@@ -16,7 +16,7 @@ import 'ant-design-vue/dist/antd.less'
 
 // VueClipboard.config.autoSetContainer = true
 
-Vue.use(Antd)
+// Vue.use(Antd)
 // Vue.use(Viser)
 // Vue.use(MultiTab)
 // Vue.use(PageLoading)

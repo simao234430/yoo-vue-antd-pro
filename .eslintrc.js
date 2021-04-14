@@ -8,6 +8,7 @@ module.exports = {
     '@vue/standard'
   ],
   rules: {
+    'no-cond-assign': 'off',
     'no-console': 'off',
     'eol-last': 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',

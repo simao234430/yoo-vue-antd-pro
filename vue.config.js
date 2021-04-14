@@ -1,5 +1,11 @@
+const path = require('path')
 const webpack = require('webpack')
 const buildDate = JSON.stringify(new Date().toLocaleString())
+
+function resolve (dir) {
+  return path.join(__dirname, dir)
+}
+
 // check Git
 function getGitHash () {
   try {
@@ -25,6 +31,35 @@ const vueConfig = {
     // if prod, add externals
     externals: isProd ? assetsCDN.externals : {}
   },
+  chainWebpack: (config) => {
+    config.resolve.alias
+      .set('@$', resolve('src'))
+
+    const svgRule = config.module.rule('svg')
+    svgRule.uses.clear()
+    svgRule
+      .oneOf('inline')
+      .resourceQuery(/inline/)
+      .use('vue-svg-icon-loader')
+      .loader('vue-svg-icon-loader')
+      .end()
+      .end()
+      .oneOf('external')
+      .use('file-loader')
+      .loader('file-loader')
+      .options({
+        name: 'assets/[name].[hash:8].[ext]'
+      })
+
+    // if prod is on
+    // assets require on cdn
+    if (isProd) {
+      config.plugin('html').tap(args => {
+        args[0].cdn = assetsCDN
+        return args
+      })
+    }
+  },
   css: {
     loaderOptions: {
       less: {
@@ -40,6 +75,12 @@ const vueConfig = {
       }
     }
   },
+
+  // disable source map in production
+  productionSourceMap: false,
+  lintOnSave: undefined,
+  // babel-loader no-ignore node_modules/*
+  transpileDependencies: []
 }
 
 module.exports = vueConfig
