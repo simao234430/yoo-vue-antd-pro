@@ -238,6 +238,7 @@ export default {
       })
     },
     handleLayout (mode) {
+      console.log('handleLayout')
       this.$store.dispatch('ToggleLayoutMode', mode)
       // 因为顶部菜单不能固定左侧菜单栏，所以强制关闭
       this.handleFixSiderbar(false)
@@ -246,6 +247,7 @@ export default {
       this.$store.dispatch('ToggleContentWidth', type)
     },
     changeColor (color) {
+      console.log('changeColor')
       if (this.primaryColor !== color) {
         this.$store.dispatch('ToggleColor', color)
         updateTheme(color)

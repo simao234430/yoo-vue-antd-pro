@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const buildDate = JSON.stringify(new Date().toLocaleString())
+const createThemeColorReplacerPlugin = require('./config/plugin.config')
 
 function resolve (dir) {
   return path.join(__dirname, dir)
@@ -68,7 +69,11 @@ const vueConfig = {
 
           // 'primary-color': '#F5222D',
           // 'link-color': '#F5222D',
-          'border-radius-base': '2px'
+          // 'vab-color-blue': '#1890ff',
+          // 'vab-margin': '20px',
+          // 'vab-padding': '20px',
+          // 'vab-header-height': '65px',
+          // 'border-radius-base': '2px'
         },
         // DO NOT REMOVE THIS LINE
         javascriptEnabled: true
@@ -81,6 +86,13 @@ const vueConfig = {
   lintOnSave: undefined,
   // babel-loader no-ignore node_modules/*
   transpileDependencies: []
+}
+
+// preview.pro.loacg.com only do not use in your production;
+if (process.env.VUE_APP_PREVIEW === 'true') {
+  console.log('VUE_APP_PREVIEW', true)
+  // add `ThemeColorReplacer` plugin to webpack plugins
+  vueConfig.configureWebpack.plugins.push(createThemeColorReplacerPlugin())
 }
 
 module.exports = vueConfig
