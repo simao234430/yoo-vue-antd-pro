@@ -1,5 +1,5 @@
 // eslint-disable-next-lin
-import { UserLayout, BasicLayout, PageView } from '@/layouts'
+import { UserLayout, PageView, IndexLayout } from '@/layouts'
 import { bxAnaalyse } from '@/core/icons'
 const RouteView = {
   name: 'RouteView',
@@ -7,10 +7,15 @@ const RouteView = {
 }
 
 export const asyncRouterMap = [
+  // {
+  //   path: '/test',
+  //   name: 'test',
+  //   component: BasicLayout
+  // },
   {
     path: '/',
     name: 'index',
-    component: BasicLayout,
+    component: IndexLayout,
     meta: { title: 'menu.home' },
     redirect: '/dashboard/workplace',
     children: [
@@ -23,7 +28,7 @@ export const asyncRouterMap = [
         meta: { title: 'menu.dashboard', keepAlive: true, icon: bxAnaalyse, permission: ['dashboard'] },
         children: [
           {
-            path: '/dashboard/analysis/:pageNo([1-9]\\d*)?',
+            path: '/dashboard/analysis',
             name: 'Analysis',
             component: () => import('@/views/dashboard/Analysis'),
             meta: { title: 'menu.dashboard.analysis', keepAlive: false, permission: ['dashboard'] }
@@ -84,7 +89,7 @@ export const asyncRouterMap = [
         meta: { title: 'menu.list', icon: 'table', permission: ['table'] },
         children: [
           {
-            path: '/list/table-list/:pageNo([1-9]\\d*)?',
+            path: '/list/table-list',
             name: 'TableListWrapper',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
             component: () => import('@/views/list/TableList'),

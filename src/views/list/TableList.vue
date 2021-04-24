@@ -1,5 +1,7 @@
 <template>
-  <page-header-wrapper>
+  <!-- <page-header-wrapper -->
+  <a-layout
+    :i18nRender="i18nRender">
     <a-card :bordered="false">
       <div class="table-page-search-wrapper">
         <a-form layout="inline">
@@ -115,14 +117,15 @@
       />
       <step-by-step-modal ref="modal" @ok="handleOk"/>
     </a-card>
-  </page-header-wrapper>
-</template>
+
+    <!-- </page-header-wrapper> -->
+  </a-layout></template>
 
 <script>
 import moment from 'moment'
 import { STable, Ellipsis } from '@/components'
 import { getRoleList, getServiceList } from '@/api/manage'
-
+import { i18nRender } from '@/locales'
 import StepByStepModal from './modules/StepByStepModal'
 import CreateForm from './modules/CreateForm'
 
@@ -236,6 +239,7 @@ export default {
     }
   },
   methods: {
+    i18nRender,
     handleAdd () {
       this.mdl = null
       this.visible = true

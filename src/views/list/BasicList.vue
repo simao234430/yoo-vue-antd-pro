@@ -1,5 +1,5 @@
 <template>
-  <page-header-wrapper>
+  <page-header-wrapper :i18nRender="i18nRender">
     <a-card :bordered="false">
       <a-row>
         <a-col :sm="8" :xs="24">
@@ -70,6 +70,8 @@
 </template>
 
 <script>
+
+import { i18nMixins } from '@/mixins/i18nMixins'
 // 演示如何使用 this.$dialog 封装 modal 组件
 import TaskForm from './modules/TaskForm'
 import Info from './components/Info'
@@ -128,6 +130,8 @@ data.push({
 })
 
 export default {
+
+  mixins: [i18nMixins],
   name: 'StandardList',
   components: {
     TaskForm,

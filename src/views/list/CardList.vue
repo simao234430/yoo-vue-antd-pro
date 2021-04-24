@@ -1,5 +1,6 @@
 <template>
   <page-header-wrapper
+    :i18nRender="i18nRender"
     :tab-list="tabList"
     :tab-active-key="tabActiveKey"
     :tab-change="(key) => {
@@ -41,7 +42,7 @@
 </template>
 
 <script>
-
+import { i18nRender } from '@/locales'
 const dataSource = []
 dataSource.push({})
 for (let i = 0; i < 11; i++) {
@@ -69,6 +70,7 @@ export default {
     }
   },
   methods: {
+    i18nRender,
     testFun () {
       this.$message.info('快速开始被点击！')
     }

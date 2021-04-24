@@ -1,5 +1,6 @@
 <template>
-  <page-header-wrapper>
+  <a-page-header>
+
     <template v-slot:content>
       <div class="page-header-content">
         <div class="avatar">
@@ -120,8 +121,9 @@
         </a-col>
       </a-row>
     </div>
-  </page-header-wrapper>
-</template>
+
+  </a-page-header>
+  </a-page-header></template>
 
 <script>
 import { mapState } from 'vuex'
