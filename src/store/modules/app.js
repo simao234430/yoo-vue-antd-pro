@@ -1,5 +1,7 @@
 import storage from 'store'
 import {
+  SET_BREAD_CRUMB,
+  SET_HOME_ROUTE,
   SIDEBAR_TYPE,
   TOGGLE_MOBILE_TYPE,
   TOGGLE_NAV_THEME,
@@ -16,6 +18,11 @@ import {
 } from '@/store/mutation-types'
 import { loadLanguageAsync } from '@/locales'
 
+import {
+  getBreadCrumbList, getHomeRoute
+} from '@/utils/util'
+// import { loadRoutes } from '../../utils/routerUtil'
+const homeName = 'home'
 const app = {
   state: {
     sideCollapsed: false,
@@ -27,12 +34,23 @@ const app = {
     fixedSidebar: false,
     autoHideHeader: false,
     color: '',
+    homeRoute: {},
     weak: false,
     multiTab: true,
     lang: 'zh-CN',
+    breadCrumbList: [],
     _antLocale: {}
   },
   mutations: {
+    [SET_HOME_ROUTE]: (state, routes) => {
+      console.log('setHomeRoute mutations')
+      console.log(getHomeRoute(routes, homeName))
+      state.homeRoute = getHomeRoute(routes, homeName)
+      console.log('done')
+    },
+    [SET_BREAD_CRUMB]: (state, route) => {
+      state.breadCrumbList = getBreadCrumbList(route, state.homeRoute)
+    },
     [SIDEBAR_TYPE]: (state, type) => {
       state.sideCollapsed = type
       storage.set(SIDEBAR_TYPE, type)

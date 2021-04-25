@@ -6,19 +6,17 @@
       @click="toggleCollapse"
     />
     <div class="ant-pro-global-header-content">
-      <a-breadcrumb>
-        <template slot="itemRender" slot-scope="{ route, params, routes, paths }">
-          <span v-if="routes.indexOf(route) === routes.length - 1">
-            {{ route.breadcrumbName }}
-          </span>
-          <router-link v-else :to="`${basePath}/${paths.join('/')}`">
-            {{ route.breadcrumbName }}
-          </router-link>
-        </template>
+      <a-breadcrumb class="trigger" >
+        <a-breadcrumb-item v-for="item in breadCrumbList" :key="`bread-crumb-${item.name}`">
+          <!-- {{$t( {{ item.meta.title }}) }} -->
+          <!-- {{ item.meta.title }} -->
+          {{ i18nRender( item.meta.title ) }}
+        </a-breadcrumb-item >
       </a-breadcrumb>
 
     </div>
     <div class="ant-pro-global-header-index-right">
+      <full-screen v-model="isFullscreen" />
       <header-notice class="ant-pro-global-header-index-action"/>
       <header-avatar class="ant-pro-global-header-index-action"/>
 
@@ -29,13 +27,22 @@
 
 <script>
 
+import { i18nRender } from '@/locales'
 import HeaderNotice from './HeaderNotice'
 import HeaderAvatar from './HeaderAvatar'
 import HeadLang from './HeadLang'
+import FullScreen from '../fullscreen/FullScreen.vue'
   export default {
-  components: { HeaderAvatar, HeaderNotice, HeadLang },
+  components: { HeaderAvatar, HeaderNotice, HeadLang, FullScreen },
+  computed: {
+            breadCrumbList () {
+      return this.$store.state.app.breadCrumbList
+    }
+  },
+
   data () {
     return {
+      isFullscreen: false,
       basePath: '/components/breadcrumb'
         // routes: [
         //   {
@@ -68,6 +75,7 @@ import HeadLang from './HeadLang'
     }
   },
     methods: {
+      i18nRender,
     toggleCollapse () {
       console.log('toggleCollapse')
       this.$emit('toggleCollapse')

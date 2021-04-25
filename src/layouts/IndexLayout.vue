@@ -11,7 +11,7 @@
       @menuSelect="onMenuSelect"
       :collapsed="collapsed"
       :collapsible="false"
-      :menuData="mainMenu[0].children"/>
+      :menuData="mainMenu"/>
     <a-layout>
       <a-layout-header style="  margin-bottom: 16px; background: #fff; padding: 0">
         <!-- <a-icon
@@ -49,9 +49,10 @@
   </a-layout>
 </template>
 <script>
-import { CONTENT_WIDTH_TYPE } from '@/store/mutation-types'
+
+import { CONTENT_WIDTH_TYPE, SET_HOME_ROUTE, SET_BREAD_CRUMB } from '@/store/mutation-types'
 import defaultSettings from '@/config/defaultSettings'
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import IMenu from './menu/menu'
 import SideMenu from './menu/SideMenu'
 import RouteView from './RouteView.vue'
@@ -59,10 +60,18 @@ import GlobalHeader from './header/GlobalHeader.vue'
 import { i18nRender } from '@/locales'
 import MultiTab from '../components/MultiTab/MultiTab.vue'
 import { SettingDrawer } from '@ant-design-vue/pro-layout'
+import { constantRouterMap, asyncRouterMap } from '@/config/router.config'
+// import routers from '@/router'
 export default {
   components: { SideMenu, IMenu, RouteView, GlobalHeader, SettingDrawer, MultiTab },
   methods: {
     i18nRender,
+        ...mapMutations([
+      // 'setBreadCrumb',
+
+      // 'setHomeRoute'
+
+    ]),
         onMenuSelect () {
       // this.toggleCollapse()
     },
@@ -105,6 +114,8 @@ export default {
     $route (val) {
       console.log('this.setActivated')
       this.setActivated(val)
+                this.$store.commit(SET_HOME_ROUTE, [...constantRouterMap, ...asyncRouterMap])
+                this.$store.commit(SET_BREAD_CRUMB, this.$route)
     },
     layout () {
       this.setActivated(this.$route)
@@ -115,11 +126,23 @@ export default {
       }
     }
   },
+    mounted () {
+    /**
+     * @description 初始化设置面包屑导航和标签导航
+     */
+          this.$store.commit(SET_HOME_ROUTE, [...constantRouterMap, ...asyncRouterMap])
+                this.$store.commit(SET_BREAD_CRUMB, this.$route)
+
+    // console.log('this.setHomeRoute')
+    // this.setHomeRoute([...constantRouterMap, ...asyncRouterMap])
+    //     console.log('this.setHomeRoute2')
+},
     computed: {
     ...mapState({
       // 动态主路由
       mainMenu: state => state.permission.addRouters
     }),
+
         menuItemList () {
       return [
         { key: '1', icon: 'vertical-right', text: this.$t('closeLeft') },

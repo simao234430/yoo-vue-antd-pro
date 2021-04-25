@@ -11,6 +11,61 @@ export function welcome () {
 }
 
 /**
+ * @param {Array} routers 路由列表数组
+ * @description 用于找到路由列表中name为home的对象
+ */
+ export const getHomeRoute = (routers, homeName = 'home') => {
+   console.log('getHomeRoute')
+  let i = -1
+  const len = routers.length
+  let homeRoute = {}
+  while (++i < len) {
+    const item = routers[i]
+    // if (item.children && item.children.length) {
+    //   const res = getHomeRoute(item.children, homeName)
+    //   if (res.name) return res
+    // } else {
+      console.log(item.name)
+      if (item.name === homeName) {
+        console.log('bingo')
+        homeRoute = item
+      }
+    // }
+  }
+  return homeRoute
+}
+
+/**
+ * @param {Array} routeMetched 当前路由metched
+ * @returns {Array}
+ */
+ export const getBreadCrumbList = (route, homeRoute) => {
+   console.log('getBreadCrumbList')
+  const homeItem = { ...homeRoute, icon: homeRoute.meta.icon }
+  const routeMetched = route.matched
+  if (routeMetched.some(item => item.name === homeRoute.name)) return [homeItem]
+  let res = routeMetched.filter(item => {
+    return item.meta === undefined || !item.meta.hideInBread
+  }).map(item => {
+    const meta = { ...item.meta }
+    if (meta.title && typeof meta.title === 'function') {
+      meta.__titleIsFunction__ = true
+      meta.title = meta.title(route)
+    }
+    const obj = {
+      icon: (item.meta && item.meta.icon) || '',
+      name: item.name,
+      meta: meta
+    }
+    return obj
+  })
+  res = res.filter(item => {
+    return !item.meta.hideInMenu
+  })
+  return [{ ...homeItem, to: homeRoute.path }, ...res]
+}
+
+/**
  * 触发 window.resize
  */
 export function triggerWindowResizeEvent () {

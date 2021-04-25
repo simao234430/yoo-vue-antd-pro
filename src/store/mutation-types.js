@@ -12,7 +12,8 @@ export const TOGGLE_COLOR = 'color'
 export const TOGGLE_WEAK = 'weak'
 export const TOGGLE_MULTI_TAB = 'multi_tab'
 export const APP_LANGUAGE = 'app_language'
-
+export const SET_BREAD_CRUMB = 'set_bread_crumb'
+export const SET_HOME_ROUTE = 'set_home_route'
 export const CONTENT_WIDTH_TYPE = {
   Fluid: 'Fluid',
   Fixed: 'Fixed'
